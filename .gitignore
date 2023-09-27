@@ -1,0 +1,5 @@
+node_modules/
+*.log
+baileys.log
+bot_sessions/
+README.md
