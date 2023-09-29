@@ -1,4 +1,4 @@
-const { createBot, createProvider, createFlow, addKeyword } = require('@bot-whatsapp/bot')
+const { createBot, createProvider, createFlow, addKeyword, EVENTS } = require('@bot-whatsapp/bot')
 const express = require('express')
 const bodyParser = require("body-parser");
 
@@ -46,6 +46,11 @@ const flowWelcome = require("./flows/flowWelcome")
 
 //const flowServices = require("./flows/flowServices")
 
+const reciveOrder = addKeyword(EVENTS.ORDER)
+.addAction( async (ctx) => {
+    console.log(ctx)
+})
+
 const flowAgent = require("./flows/flowAgent");
 
 const flowAbout = require("./flows/flowAbout")
@@ -67,6 +72,8 @@ const main = async () => {
     const adapterFlow = createFlow([
         flowWelcome,
         flowAgent, 
+        //flowServices, 
+        reciveOrder,
         flowAbout,
     ])
 
