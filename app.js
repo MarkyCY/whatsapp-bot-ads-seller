@@ -11,30 +11,33 @@ const MockAdapter = require('@bot-whatsapp/database/mock')
     WebSockets
 */
 
-const WebSocket = require('ws');
+const http = require('http');
+const server = http.createServer();
 
-const wss = new WebSocket.Server({ port: 8080 });
+const io = require('socket.io')(server);
 
-wss.on('connection', function connection(ws) {
+io.on('connection', (socket) => {
   console.log('Cliente conectado');
 
-  ws.on('message', function incoming(message) {
-    console.log('Mensaje recibido: ', message);
+  socket.on('message', (message) => {
+    console.log('Mensaje recibido:', message);
+    // Puedes enviar un mensaje de vuelta si es necesario
+    // socket.emit('respuesta', 'Mensaje recibido con éxito');
   });
 
-  ws.on('close', function close() {
+  socket.on('disconnect', () => {
     console.log('Cliente desconectado');
   });
 });
 
-// Enviar el objeto ctx a través de websockets
+server.listen(8080, () => {
+  console.log('Servidor escuchando en el puerto 8080');
+});
+
+// Enviar el objeto ctx a través de socket io
 function enviarObjetoCtx(objeto) {
-  wss.clients.forEach(function each(client) {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(objeto));
-    }
-  });
-}
+    io.sockets.emit('message', objeto); // 'message' es el nombre del evento que desees usar
+  }
 
 module.exports = enviarObjetoCtx
 
@@ -46,10 +49,10 @@ const flowWelcome = require("./flows/flowWelcome")
 
 //const flowServices = require("./flows/flowServices")
 
-const reciveOrder = addKeyword(EVENTS.ORDER)
+/*const reciveOrder = addKeyword(EVENTS.ORDER)
 .addAction( async (ctx) => {
     console.log(ctx)
-})
+})*/
 
 const flowAgent = require("./flows/flowAgent");
 
@@ -73,7 +76,7 @@ const main = async () => {
         flowWelcome,
         flowAgent, 
         //flowServices, 
-        reciveOrder,
+        //reciveOrder,
         flowAbout,
     ])
 
