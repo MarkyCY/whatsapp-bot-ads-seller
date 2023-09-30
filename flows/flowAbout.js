@@ -8,7 +8,7 @@ const flowAbout = addKeyword("SOBRE", { sensitive: true })
         enviarObjetoCtx(ctx)
 
         await provider.vendor.sendMessage(`${ctx.from}@c.us`, {
-            text: '👤*Creador del Bot*🤖',
+            text: '💼LinkedIn: https://www.linkedin.com/in/marcos-j-cardenas-p-717b30239/\n✖️Twitter: https://www.twitter.com/markycy_\n🐈‍⬛GitHub: https://github.com/MarkyCY',
             contextInfo: {
               externalAdReply: {
                 title: 'Marcos J Cardenas P',
