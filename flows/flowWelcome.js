@@ -7,7 +7,7 @@ const flowWelcome = addKeyword(['hola!'])
     .addAnswer([
         'Use los siguientes comandos para su acción correspondiente:',
         '',
-        '*SERVICIOS* ver la lista de productos.',
+        '*PRODUCTOS* ver la lista de productos.',
         '*AGENTE* comunicarse con un agente.',
         '*SOBRE* información de la aplicación.',
     ])
