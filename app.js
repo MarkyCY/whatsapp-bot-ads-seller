@@ -21,8 +21,6 @@ io.on('connection', (socket) => {
 
   socket.on('message', (message) => {
     console.log('Mensaje recibido:', message);
-    // Puedes enviar un mensaje de vuelta si es necesario
-    // socket.emit('respuesta', 'Mensaje recibido con éxito');
   });
 
   socket.on('disconnect', () => {
@@ -47,12 +45,15 @@ module.exports = enviarObjetoCtx
 
 const flowWelcome = require("./flows/flowWelcome")
 
-//const flowServices = require("./flows/flowServices")
+const flowProduct = require("./flows/flowProduct")
 
-/*const reciveOrder = addKeyword(EVENTS.ORDER)
+/*
+Recibir evento de compra:
+const reciveOrder = addKeyword(EVENTS.ORDER)
 .addAction( async (ctx) => {
     console.log(ctx)
-})*/
+})
+*/
 
 const flowAgent = require("./flows/flowAgent");
 
@@ -67,15 +68,21 @@ app.use(bodyParser.json());
 const main = async () => {
     const adapterDB = new MockAdapter()
     const adapterProvider = createProvider(BaileysProvider)
-    /*const adapterProvider = createProvider(TwilioProvider, {
+
+    /*
+    Twilio config
+    const adapterProvider = createProvider(TwilioProvider, {
         accountSid: "ACedf23e4ef05767a1a0eec8422f2a191b", //AC4695aa720b4d700a***************
         authToken: "1cc8bab1c0149f1488e1c41005901233", //3f6fae09f7a1c3534***************
         vendorNumber: "+14155238886", //+14155238886
-    })*/
+    })
+    
+    */
+
     const adapterFlow = createFlow([
         flowWelcome,
         flowAgent, 
-        //flowServices, 
+        flowProduct, 
         //reciveOrder,
         flowAbout,
     ])
