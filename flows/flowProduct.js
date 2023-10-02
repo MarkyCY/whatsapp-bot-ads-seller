@@ -1,6 +1,9 @@
 const { addKeyword } = require("@bot-whatsapp/bot");
 const { run, getDb } = require("../module/mongo");
 
+const util = require('util');
+const sleep = util.promisify(setTimeout);
+
 const sendAd = require("../module/sendAd");
 
 // Flujo de Productos
@@ -22,7 +25,7 @@ const flowProduct = addKeyword("PRODUCTOS", { sensitive: true })
     async (ctx, { flowDynamic, provider, fallBack }) => {
       if (ctx.body >= 1 && ctx.body <= 6) {
         flowDynamic(`Bien, mostrando categoría *${ctx.body}*...`);
-
+        await sleep(1000);
         try {
           await run();
           const db = getDb();
@@ -37,6 +40,7 @@ const flowProduct = addKeyword("PRODUCTOS", { sensitive: true })
             const messageOptions = {text: `Precio: *$${doc.descr.price}*\nTallas: *${doc.descr.size.join(" ")}*\nColores: *${doc.descr.color.join("")}*\nCantidad: *${doc.descr.cant}*`,
               title: doc.title,
               body: doc.body,
+              mediaType: doc.mediaType,
               thumbnailUrl: doc.thumbnailUrl,
               sourceUrl: doc.sourceUrl,
               renderLargerThumbnail: doc.renderLargerThumbnail,
