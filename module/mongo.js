@@ -4,7 +4,8 @@ const mongo_user = process.env.USER_MONGO;
 const mongo_pass = process.env.PASS_MONGO;
 
 // URL de conexión a la base de datos MongoDB
-const url = `mongodb+srv://${mongo_user}:${mongo_pass}@cluster0.nipfwih.mongodb.net/?retryWrites=true&w=majority`;
+const url = `mongodb://127.0.0.1:27017/`;
+//const url = `mongodb+srv://${mongo_user}:${mongo_pass}@cluster0.nipfwih.mongodb.net/?retryWrites=true&w=majority`;
 
 // Nombre de la base de datos
 const dbName = 'shop';
